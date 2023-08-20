@@ -1,24 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import * as React from 'react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import GlobalStyles from '@mui/material/GlobalStyles';
+import Appbar from './components/Appbar';
+import { Route, Routes } from 'react-router-dom';
+import Dashboard from './components/Dashboard';
+import PollPage from './components/PollPage';
+import NewQuestionPage from './components/NewQuestionPage';
+import Leaderboard from './components/Leaderboard';
+
+const LinksProperites = [
+  {
+      name: 'Home',
+      path: '/', 
+  },
+  {
+      name: 'New Question',
+      path: '/add',
+  },
+  {
+      name: 'Leaderboard',
+      path: '/leaderboard',
+  },
+];
 
 function App() {
+
+  const defaultTheme = createTheme();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={defaultTheme}>
+      <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
+      <CssBaseline />
+      <Appbar LinksProperites={LinksProperites} />
+
+      <Routes>
+      <Route path="/dd" exact element={<Dashboard  />} />
+      <Route path="/" exact element={<PollPage  />} />
+      <Route path="/add" exact element={<NewQuestionPage  />} />
+      <Route path="/leaderboard" exact element={<Leaderboard  />} />
+      </Routes>
+      
+    </ThemeProvider>
   );
 }
 
