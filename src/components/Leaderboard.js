@@ -3,6 +3,9 @@ import React from 'react';
 import { styled } from '@mui/material/styles';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Container } from '@mui/material';
 import { tableCellClasses } from '@mui/material/TableCell';
+import { connect } from 'react-redux';
+import getUserAvatar from '../functions/getUserAvatar';
+import { Navigate } from 'react-router-dom';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -24,21 +27,12 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
   }));
   
-  function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-  }
-
-  const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-  ];
-
-  
-function Leaderboard() {
-    return (
+function Leaderboard(props) {
+    const { users, authedUser } = props;
+    
+    console.log(users);
+    if (!authedUser) return <Navigate to="/403" />
+    else return (
         <TableContainer component={Paper} sx={{padding:5}}>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
@@ -49,22 +43,24 @@ function Leaderboard() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
-                <StyledTableRow key={row.name}>
+              {users && Object.keys(users).sort((a,b) => {
+                const a_score = Object.keys(users[a].answers).length + users[a].questions.length;
+                const b_score = Object.keys(users[b].answers).length + users[b].questions.length;
+                return b_score - a_score;
+              }).map((user_id) => (
+                <StyledTableRow key={user_id + "_row_in_leaderboard"}>
                   <StyledTableCell component="th" scope="row">
                     <Container sx={{display:"flex", alignItems:"center"}}>
-                        <img src="https://www.w3schools.com/howto/img_avatar.png" width="50px" alt="user" />
+                        <img src={getUserAvatar(users[user_id].avatarURL)} width={"50px"} alt="user avatar" />
                         <Container sx={{marginLeft:2}}>
-                          <Typography>{row.name}</Typography>
+                          <Typography>{users[user_id].name}</Typography>
                           <Typography variant="body2" gutterBottom sx={{color:"gray"}}> sarahsdfs </Typography>
                         </Container>
                     </Container>
                     
                   </StyledTableCell>
-                  <StyledTableCell >
-                    {row.calories}
-                  </StyledTableCell>
-                  <StyledTableCell >{row.fat}</StyledTableCell>
+                  <StyledTableCell >{Object.keys(users[user_id].answers).length}</StyledTableCell>
+                  <StyledTableCell >{users[user_id].questions.length}</StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
@@ -73,4 +69,11 @@ function Leaderboard() {
       );
 }
 
-export default Leaderboard;
+
+const mapStateToProps = ({authedUser, users}) => {
+    return {
+        authedUser,
+        users
+    }
+}
+export default connect(mapStateToProps)(Leaderboard);

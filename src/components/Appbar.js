@@ -1,13 +1,30 @@
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-
-import { Typography, Link as MuiLink, Select, MenuItem, Button } from '@mui/material';
-
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Typography, Select, MenuItem, Button, Toolbar, AppBar } from '@mui/material';
+import { setAuthedUser } from '../actions/authedUser';
+import { Link, useNavigate } from 'react-router-dom';
+import { connect } from 'react-redux';
+import authedUser from '../reducers/authedUser';
 
 function Appbar(props) {
-    const { LinksProperites } = props;
+    const { LinksProperites, users, authedUser } = props;
+    const [currAuthedUser, setcurrAuthedUser] = useState("");
+    const navitgate = useNavigate();
     
+    useEffect(() => {
+      setcurrAuthedUser(props.authedUser);
+    }, [props.authedUser])
+
+
+    const onSignIn = (uid) => {
+      props.dispatch(setAuthedUser(uid));
+      const currLink = window.location.pathname;
+
+      if (!currLink.match(/\/questions\/.*/)) {
+        navitgate("/");
+      }
+
+    }
+
     return ( 
         <AppBar
         position="static"
@@ -16,10 +33,7 @@ function Appbar(props) {
         sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
       >
         <Toolbar sx={{ flexWrap: 'wrap' }}>
-          <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-          {/* TODO: add the current user logo & name */} 
-            Hi user
-          </Typography>
+          <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }} >{authedUser ? users[authedUser].name:"----"}</Typography>
           <nav>
             {LinksProperites.map(({ name, path }) => (
                 <Button
@@ -32,17 +46,33 @@ function Appbar(props) {
                 </Button>
             ))}
           </nav>
-          <Select variant="outlined" defaultValue={"none"} sx={{ my: 1, mx: 1.5 }}>
-            <MenuItem value={"none"} disabled>
-                Select a user
-            </MenuItem>
-            <MenuItem value={"sarahedo"}>Sarah Edo</MenuItem>
-            <MenuItem value={"tylermcginnis"}>Tyler McGinnis</MenuItem>
-            <MenuItem value={"johndoe"}>John Doe</MenuItem>
+          <Select variant="outlined" value={currAuthedUser ? currAuthedUser:"none"} sx={{ my: 1, mx: 1.5 }}>
+          <MenuItem 
+            onClick={() => props.dispatch(setAuthedUser(null))} 
+            sx={{color:currAuthedUser && "red", fontWeight:800}} 
+            value={"none"} disabled={!currAuthedUser}>{!currAuthedUser ? "Select a user":"LOGOUT"}</MenuItem>
+
+          {users && Object.keys(users).map((uid) => (
+            <MenuItem 
+            sx={uid === currAuthedUser ? ({color:"green", fontWeight:800}):({})} 
+            key={uid+"signIn_select_item_list"} 
+            value={uid} 
+            onClick={() => onSignIn(uid)}
+            >{users[uid].name}</MenuItem>
+          ))}
+
           </Select>
         </Toolbar>
       </AppBar>
      );
 }
 
-export default Appbar;
+const mapStateToProps = ({authedUser, users},props) => {
+    return {
+        LinksProperites: props.LinksProperites,
+        authedUser,
+        users,
+    }
+}
+
+export default connect(mapStateToProps)(Appbar);

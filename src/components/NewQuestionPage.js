@@ -1,17 +1,26 @@
-import { Typography, Container, Input, TextField, Button } from "@mui/material";
+import { Typography, Container, TextField, Button } from "@mui/material";
 import { useState } from "react";
-function NewQuestionPage() {
+import { connect } from "react-redux";
+import { handleCreateNewQuestion } from "../actions/shared";
+import { Navigate, useNavigate } from "react-router-dom";
 
+function NewQuestionPage(props) {
+    const { users, authedUser } = props;
     const [firstOption, setfirstOption] = useState("");
     const [secondOption, setsecondOption] = useState("");
+
+    const navigete = useNavigate();
     
     const UploadQuestion = (e) => {
         e.preventDefault();
-        console.log(firstOption, secondOption);
-
+        props.dispatch(handleCreateNewQuestion(authedUser, firstOption, secondOption));
         setfirstOption("");
         setsecondOption("");
+        navigete("/");
     }
+
+    if (!authedUser) return <Navigate to="/403" />;
+    else
     return ( 
         <Container sx={{textAlign:"center"}}>
             <Typography variant="h3" gutterBottom sx={{marginTop:5}}> Would You Rather </Typography>
@@ -43,4 +52,10 @@ function NewQuestionPage() {
      );
 }
 
-export default NewQuestionPage;
+const mapStateToProps = ({authedUser}) => {
+    return {
+        authedUser
+    }
+}
+
+export default connect(mapStateToProps)(NewQuestionPage);

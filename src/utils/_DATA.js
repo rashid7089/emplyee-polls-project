@@ -3,7 +3,7 @@ let users = {
     id: 'sarahedo',
     password:'password123',
     name: 'Sarah Edo',
-    avatarURL: null,
+    avatarURL: "user_2",
     answers: {
       "8xf0y6ziyjabvozdd253nd": 'optionOne',
       "6ni6ok3ym7mf1p33lnez": 'optionOne',
@@ -16,7 +16,7 @@ let users = {
     id: 'tylermcginnis',
     password:'abc321',
     name: 'Tyler McGinnis',
-    avatarURL: null,
+    avatarURL: "user_1",
     answers: {
       "vthrdm985a262al8qx3do": 'optionOne',
       "xj352vofupe1dqz9emx13r": 'optionTwo',
@@ -27,7 +27,7 @@ let users = {
     id: 'mtsamis',
     password:'xyz123',
     name: 'Mike Tsamis',
-    avatarURL: null,
+    avatarURL: "user_3",
     answers: {
       "xj352vofupe1dqz9emx13r": 'optionOne',
       "vthrdm985a262al8qx3do": 'optionTwo',
@@ -39,7 +39,7 @@ let users = {
     id: 'zoshikanlu',
     password:'pass246',
     name: 'Zenobia Oshikanlu',
-    avatarURL: null,
+    avatarURL: "user_4",
     answers: {
       "xj352vofupe1dqz9emx13r": 'optionOne',
     },
@@ -128,23 +128,23 @@ let questions = {
   },
 }
 
-function generateUID () {
+function generateUID () { // not used
   return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 }
 
-export function _getUsers () {
+export function _getUsers () { // done
   return new Promise((resolve) => {
     setTimeout(() => resolve({...users}), 1000)
   })
 }
 
-export function _getQuestions () {
+export function _getQuestions () { // done
   return new Promise((resolve) => {
     setTimeout(() => resolve({...questions}), 1000)
   })
 }
 
-function formatQuestion ({ optionOneText, optionTwoText, author }) {
+function formatQuestion ({ optionOneText, optionTwoText, author }) { // not used
   return {
     id: generateUID(),
     timestamp: Date.now(),
@@ -160,7 +160,7 @@ function formatQuestion ({ optionOneText, optionTwoText, author }) {
   }
 }
 
-export function _saveQuestion (question) {
+export function _saveQuestion (question) { // done
   return new Promise((resolve, reject) => {
     if (!question.optionOneText || !question.optionTwoText || !question.author) {
       reject("Please provide optionOneText, optionTwoText, and author");
@@ -178,10 +178,10 @@ export function _saveQuestion (question) {
   })
 }
 
-export function _saveQuestionAnswer ({ authedUser, qid, answer }) {
+export function _saveQuestionAnswer ({ authedUser, question_id, answer }) { // done
   return new Promise((resolve, reject) => {
-    if (!authedUser || !qid || !answer) {
-      reject("Please provide authedUser, qid, and answer");
+    if (!authedUser || !question_id || !answer) {
+      reject("Please provide authedUser, question_id, and answer");
     }
 
     setTimeout(() => {
@@ -191,18 +191,18 @@ export function _saveQuestionAnswer ({ authedUser, qid, answer }) {
           ...users[authedUser],
           answers: {
             ...users[authedUser].answers,
-            [qid]: answer
+            [question_id]: answer
           }
         }
       }
 
       questions = {
         ...questions,
-        [qid]: {
-          ...questions[qid],
+        [question_id]: {
+          ...questions[question_id],
           [answer]: {
-            ...questions[qid][answer],
-            votes: questions[qid][answer].votes.concat([authedUser])
+            ...questions[question_id][answer],
+            votes: questions[question_id][answer].votes.concat([authedUser])
           }
         }
       }
