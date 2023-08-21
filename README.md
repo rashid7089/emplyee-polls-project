@@ -12,4 +12,4 @@ This Project is about employee polls, where employee can create and answer polls
 
 # Original & copyright
 - This project was bootstrapped with the template from material-ui for pricing_table project [material-ui](https://github.com/mui/material-ui/blame/v5.14.5/docs/data/material/getting-started/templates/pricing/Pricing.js).
-icons was bootstrapped from [flaticons](https://www.flaticon.com/free-icons/worker).
+- icons was bootstrapped from [flaticons](https://www.flaticon.com/free-icons/worker).
