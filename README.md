@@ -1,6 +1,5 @@
 # App Description
-This Project is a book tracking App, where you can track all books you want to read
-and categories them in 3 main shelfs (want to read, read, currently reading). It also allow you to search for new books and add them to your shelfs.
+This Project is about employee polls, where employee can create and answer polls of each other to enhance their teamwork and take better decisions.
 
 # How to start
 1. clone or download the project on your machine
@@ -11,12 +10,6 @@ and categories them in 3 main shelfs (want to read, read, currently reading). It
 3. run `npm start` to lunch the app
 4. the application will run on localhost port 3000 [http://localhost:3000](http://localhost:3000).
 
-# Data
-
-There are two types of objects stored in our database:
-
-* Users
-* Questions
-
 # Original & copyright
-This project was bootstrapped with the template from udacity for react-bookTracking project
+- This project was bootstrapped with the template from material-ui for pricing_table project [https://github.com/mui/material-ui/blame/v5.14.5/docs/data/material/getting-started/templates/pricing/Pricing.js](material-ui pricing template)
+- icons was bootstrapped from [https://www.flaticon.com/free-icons/worker](flaticons)
