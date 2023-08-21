@@ -1,8 +1,9 @@
-import { handleInitialData_Questions, addNewQuestion } from "./questions";
-import { handleInitialData_Users, addUserNewQuestion } from "./users";
+import { handleInitialData_Questions } from "./questions";
+import { handleInitialData_Users } from "./users";
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import { _saveQuestionAnswer, _saveQuestion } from "../utils/_DATA";
 
+// action types
 export const ADD_VOTE = "ADD_VOTE";
 export const REMOVE_VOTE = "REMOVE_VOTE";
 export const CREATE_NEW_QUESTION = "CREATE_NEW_QUESTION";
@@ -62,9 +63,9 @@ export const handleCreateNewQuestion = (authedUser, optionOneText, optionTwoText
         author: authedUser,
     }).then((question) => {
         dispatch(createNewQuestion(question));
-        alert("Question Uploaded Successfully");
     }).catch((e) => {
-        alert("error creating a new question");
+        console.log("----------- error creating new question", e);
+        alert(e);
     }
     ).finally(() => {
         dispatch(hideLoading());

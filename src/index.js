@@ -3,23 +3,14 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import reducer from './reducers';
-import middleware from './middlewares';
-import { createStore } from 'redux';
+import store from './reduxStore';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const store = createStore(reducer, middleware);
 
 root.render(
     <BrowserRouter>
-
-    <Provider store={store}>
+        <Provider store={store}>
             <App />
-        
-    </Provider>
+        </Provider>
     </BrowserRouter>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

@@ -33,7 +33,7 @@ function Leaderboard(props) {
     console.log(users);
     if (!authedUser) return <Navigate to="/403" />
     else return (
-        <TableContainer component={Paper} sx={{padding:5}}>
+        <TableContainer data-testid="leaderboard_container" component={Paper} sx={{padding:5}}>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
               <TableRow>

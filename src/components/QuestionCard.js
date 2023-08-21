@@ -9,8 +9,8 @@ import { Link } from 'react-router-dom';
 
 function QuestionCard(props) {
 
-  const questionData = props.questions[props.question_id];
-  const authorData = props.users[questionData.author];
+  const questionData = props.questions[props.question_id] || {};
+  const authorData = props.users[questionData.author] || {};
 
   const convertTimestampToDate = (timestamp) => {
     const date = new Date(timestamp);
@@ -18,7 +18,7 @@ function QuestionCard(props) {
   }
   
   return (
-    <Card sx={{ minWidth: 220, margin:1, border:"2px solid green" }}>
+    <Card sx={{ minWidth: 250, margin:1, border:"2px solid green" }}>
       <CardContent>
         <Typography variant="h5" component="div">{authorData.name}</Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">

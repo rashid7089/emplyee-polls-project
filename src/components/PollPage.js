@@ -78,7 +78,7 @@ function PollPage(props) {
                     onClick={() => submitAnswer(formatOptions(1))}
                     disabled={userAnswer !== ""}
                     > {questionData.optionOne && questionData.optionOne.text}</Button>
-                    <Typography sx={{color:"gray"}} variant="p" gutterBottom>{`${firstOptionVotes} people vote for this choice (${Math.floor(firstOptionVotes/(secondOptionVotes+firstOptionVotes)*100)}% of total votes)`}</Typography>
+                    <Typography sx={{color:"gray"}} variant="p" gutterBottom>{`${firstOptionVotes} people vote for this choice (${Math.floor(firstOptionVotes/Math.max(secondOptionVotes+firstOptionVotes, 1)*100)}% of total votes)`}</Typography>
                 </Container>
 
                 <Typography variant="h5" gutterBottom> or </Typography>
@@ -92,7 +92,7 @@ function PollPage(props) {
                     onClick={() => submitAnswer(formatOptions(2))}
                     disabled={userAnswer !== ""}
                     >{questionData.optionTwo && questionData.optionTwo.text}</Button>
-                    <Typography sx={{color:"gray"}} variant="p" gutterBottom>{`${secondOptionVotes} people vote for this choice (${Math.floor(secondOptionVotes/(secondOptionVotes+firstOptionVotes)*100)}% of total votes)`}</Typography>
+                    <Typography sx={{color:"gray"}} variant="p" gutterBottom>{`${secondOptionVotes} people vote for this choice (${Math.floor(secondOptionVotes/Math.max(secondOptionVotes+firstOptionVotes, 1)*100)}% of total votes)`}</Typography>
                 </Container>
 
             </Container>
