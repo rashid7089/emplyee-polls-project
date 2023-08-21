@@ -11,5 +11,5 @@ This Project is about employee polls, where employee can create and answer polls
 4. the application will run on localhost port 3000 [http://localhost:3000](http://localhost:3000).
 
 # Original & copyright
-- This project was bootstrapped with the template from material-ui for pricing_table project [https://github.com/mui/material-ui/blame/v5.14.5/docs/data/material/getting-started/templates/pricing/Pricing.js](material-ui pricing template)
-- icons was bootstrapped from [https://www.flaticon.com/free-icons/worker](flaticons)
+- This project was bootstrapped with the template from material-ui for pricing_table project [https://github.com/mui/material-ui/blame/v5.14.5/docs/data/material/getting-started/templates/pricing/Pricing.js](material-ui pricing template).
+- icons was bootstrapped from [https://www.flaticon.com/free-icons/worker](flaticons).
