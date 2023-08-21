@@ -6,28 +6,6 @@ function usersReducers(state = {}, action) {
     case GET_USERS:
       return action.users;
 
-    case REMOVE_VOTE: // only used for redux incase of error saving to db
-        return {
-            ...state,
-            [action.authedUser]: {
-                ...state[action.authedUser],
-                answers: {
-                    ...state[action.authedUser].answers,
-                    [action.question_id]: {
-                        ...state[action.authedUser].answers[action.question_id],
-                        votes: state[action.authedUser].answers[action.question_id].votes.filter((user) => user !== action.authedUser),
-                    }
-                }
-            }
-        }
-    case CREATE_NEW_QUESTION:
-        return {
-            ...state,
-            [action.question.author]: {
-                ...state[action.question.author],
-                questions: state[action.question.author].questions.concat([action.question.id]),
-            }
-        };
     case ADD_VOTE:
     case SET_USER_ANSWER:
         return {
@@ -41,6 +19,23 @@ function usersReducers(state = {}, action) {
             }
         }
     
+    case REMOVE_VOTE: // only used for redux incase of error saving to db
+        return {
+            ...state,
+            [action.authedUser]: {
+                ...state[action.authedUser],
+                answers: Object.fromEntries(Object.entries(state[action.authedUser].answers)
+                .filter(([qid]) => qid !== action.question_id))
+            }
+        }
+    case CREATE_NEW_QUESTION:
+        return {
+            ...state,
+            [action.question.author]: {
+                ...state[action.question.author],
+                questions: state[action.question.author].questions.concat([action.question.id]),
+            }
+        };
     case REMOVE_USER_ANSWER:
         const { [action.question_id]: USELESS, ...newAnswers } = state[action.authedUser].answers;
         return {
