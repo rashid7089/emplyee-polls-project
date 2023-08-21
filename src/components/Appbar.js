@@ -19,9 +19,9 @@ function Appbar(props) {
       props.dispatch(setAuthedUser(uid));
       const currLink = window.location.pathname;
 
-      if (!currLink.match(/\/questions\/.*/)) {
-        navitgate("/");
-      }
+      // if (!currLink.match(/\/questions\/.*/)) {
+      //   navitgate("/");
+      // }
 
     }
 

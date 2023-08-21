@@ -1,10 +1,11 @@
-import * as React from 'react';
-import { Container, Typography, Box } from '@mui/material';
+import React, { useState } from 'react';
+import { Container, Typography, Box, Select, MenuItem } from '@mui/material';
 import QuestionCard from './QuestionCard';
 import { connect } from 'react-redux';
 
 function Dashboard(props) {
   const { questions } = props;
+  const [displayedSection, setdisplayedSection] = useState("unanswered")
 
   const AnsweredQuestions = [];
   if (questions) {
@@ -19,8 +20,23 @@ function Dashboard(props) {
 
     return ( 
         <Container>
-            <Container sx={{ marginTop:4, paddingBottom:10, borderBottom:"2px solid black" }}>
-                <Typography variant="h4" component="h1" gutterBottom> New Questions </Typography>
+            <Container sx={{display:"flex", alignItems:"center", marginTop:2, marginBottom:2}}>
+                <Typography variant="h5" gutterBottom sx={{color:"green"}}> Displayed Section </Typography>
+                <Select variant="outlined" value={displayedSection} sx={{ my: 1, mx: 1.5 }}>
+                  {["answered", "unanswered"].map((section) => (
+                    <MenuItem
+                      key={section}
+                      value={section}
+                      onClick={() => setdisplayedSection(section)}
+                      sx={{fontWeight:800}}
+                    >
+                      {section}
+                    </MenuItem>
+                    ))}
+                </Select>
+            </Container>
+            <Container sx={{ paddingBottom:5, paddingTop:5, borderBottom:"1px solid gray", borderTop:"1px solid gray" }}>
+                <Typography variant="h4" component="h1" gutterBottom>{displayedSection}</Typography>
 
                 <Box
                 sx={{
@@ -32,35 +48,14 @@ function Dashboard(props) {
                 }}
               >
               {questions && Object.keys(questions)
-                .filter(question_id => !AnsweredQuestions.includes(question_id))
+                .filter(question_id => displayedSection === "unanswered" ? !AnsweredQuestions.includes(question_id):AnsweredQuestions.includes(question_id))
                 .sort((a,b) => questions[b].timestamp - questions[a].timestamp)
                 .map((question_id) => (
-                <QuestionCard key={question_id + "newQuestion_section"} question_id={question_id} />
+                <QuestionCard key={question_id + displayedSection + "_section"} question_id={question_id} />
               ))}
 
               </Box>
             </Container>
-            <Container sx={{ marginTop:4, paddingBottom:10, borderBottom:"2px solid black" }}>
-                <Typography variant="h4" component="h1" gutterBottom> Done </Typography>
-
-                <Box
-                sx={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  bgcolor: 'background.paper',
-                  maxWidth: "100%",
-                  borderRadius: 1,
-                }}
-              >
-              {questions && Object.keys(questions)
-                .filter(question_id => AnsweredQuestions.includes(question_id))
-                .sort((a,b) => questions[b].timestamp - questions[a].timestamp)
-                .map((question_id) => (
-                <QuestionCard key={question_id + "done_section"} question_id={question_id} />
-              ))}
-              </Box>
-            </Container>
-
         </Container>
      );
 }

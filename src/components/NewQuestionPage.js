@@ -3,6 +3,7 @@ import { useState } from "react";
 import { connect } from "react-redux";
 import { handleCreateNewQuestion } from "../actions/shared";
 import { Navigate, useNavigate } from "react-router-dom";
+import Error403Page from "./Error403Page";
 
 function NewQuestionPage(props) {
     const { authedUser } = props;
@@ -21,7 +22,7 @@ function NewQuestionPage(props) {
         navigete("/");
     }
 
-    if (!authedUser) <Navigate to="/403" />
+    if (!authedUser) return <Error403Page />
     else return ( 
         <Container sx={{textAlign:"center"}} data-testid="newQuestionPage_container">
             <Typography variant="h3" gutterBottom sx={{marginTop:5}}> Would You Rather </Typography>

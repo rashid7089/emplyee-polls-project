@@ -6,6 +6,7 @@ import { tableCellClasses } from '@mui/material/TableCell';
 import { connect } from 'react-redux';
 import getUserAvatar from '../functions/getUserAvatar';
 import { Navigate } from 'react-router-dom';
+import Error403Page from './Error403Page';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -31,7 +32,7 @@ function Leaderboard(props) {
     const { users, authedUser } = props;
     
     console.log(users);
-    if (!authedUser) return <Navigate to="/403" />
+    if (!authedUser) return <Error403Page />
     else return (
         <TableContainer data-testid="leaderboard_container" component={Paper} sx={{padding:5}}>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
