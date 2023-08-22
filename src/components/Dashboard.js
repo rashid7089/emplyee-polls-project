@@ -8,7 +8,7 @@ function Dashboard(props) {
   const [displayedSection, setdisplayedSection] = useState("unanswered")
 
   const AnsweredQuestions = [];
-  if (questions) {
+  if (questions !== undefined && questions !== null && questions !== {}) {
     Object.keys(questions).forEach((question_id) => 
       {
         if (questions[question_id].optionOne.votes.includes(props.authedUser) || questions[question_id].optionTwo.votes.includes(props.authedUser)) {
