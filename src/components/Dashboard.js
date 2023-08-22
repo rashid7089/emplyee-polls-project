@@ -22,7 +22,7 @@ function Dashboard(props) {
         <Container>
             <Container sx={{display:"flex", alignItems:"center", marginTop:2, marginBottom:2}}>
                 <Typography variant="h5" gutterBottom sx={{color:"green"}}> Displayed Section </Typography>
-                <Select variant="outlined" value={displayedSection} sx={{ my: 1, mx: 1.5 }}>
+                <Select name='selectDisplaySection' variant="outlined" value={displayedSection} sx={{ my: 1, mx: 1.5 }}>
                   {["answered", "unanswered"].map((section) => (
                     <MenuItem
                       key={section}

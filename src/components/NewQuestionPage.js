@@ -34,12 +34,14 @@ function NewQuestionPage(props) {
                 {isSubmitted && <div data-testid="submittedSign" />} 
                 <input // for testing purposes only
                     type="hidden"
+                    name="firstoption_hidden"
                     value={firstOption}
                     data-testid="firstOption"
                     onChange={(e) => setfirstOption(e.target.value)}
                 />
                 <input // for testing purposes only
                     type="hidden"
+                    name="secondoption_hidden"
                     value={secondOption}
                     data-testid="secondOption"
                     onChange={(e) => setsecondOption(e.target.value)}
@@ -47,7 +49,8 @@ function NewQuestionPage(props) {
             {/* ------------------------------------------------------------ */}
 
                 <TextField 
-                    id="outlined-basic" 
+                    id="outlined-basic-1" 
+                    name="firstoption_input"
                     label="First Option" 
                     variant="outlined" 
                     fullWidth 
@@ -56,7 +59,8 @@ function NewQuestionPage(props) {
                     onChange={(e) => setfirstOption(e.target.value)}
                  />
                 <TextField 
-                    id="outlined-basic" 
+                    id="outlined-basic-2" 
+                    name="secondoption_input"
                     label="Second Option" 
                     variant="outlined" 
                     fullWidth 

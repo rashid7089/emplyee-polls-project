@@ -46,7 +46,7 @@ function Appbar(props) {
                 </Button>
             ))}
           </nav>
-          <Select variant="outlined" value={currAuthedUser ? currAuthedUser:"none"} sx={{ my: 1, mx: 1.5 }}>
+          <Select name='selectAUser' variant="outlined" value={currAuthedUser ? currAuthedUser:"none"} sx={{ my: 1, mx: 1.5 }}>
           <MenuItem 
             onClick={() => props.dispatch(setAuthedUser(null))} 
             sx={{color:currAuthedUser && "red", fontWeight:800}} 
